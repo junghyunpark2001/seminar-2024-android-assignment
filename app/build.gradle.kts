@@ -1,3 +1,4 @@
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -11,11 +12,11 @@ plugins {
 android {
     namespace = "com.wafflestudio.waffleseminar2024"
     compileSdk = 34
-    android {
-        buildFeatures {
-            viewBinding = true
-        }
+
+    buildFeatures {
+        viewBinding = true
     }
+
     defaultConfig {
         applicationId = "com.wafflestudio.waffleseminar2024"
         minSdk = 24
@@ -23,6 +24,12 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val properties = Properties()
+        properties.load(project.rootProject.file("apikey.properties").inputStream())
+
+        // TMDB_API_KEY를 가져옵니다.
+        val apiKey = properties.getProperty("TMDB_API_KEY") ?: ""
+        buildConfigField("String", "TMDB_API_KEY", "\"$apiKey\"")
     }
 
     buildTypes {
@@ -34,10 +41,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -63,4 +72,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.okhttp)
 }

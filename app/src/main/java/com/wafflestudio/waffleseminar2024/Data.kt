@@ -32,6 +32,10 @@ data class Company(
     val originCountry: String?
 )
 
+data class MovieSearchResponse(
+    val results: List<Movie>
+)
+
 data class Country(
     val iso: String,
     val name: String

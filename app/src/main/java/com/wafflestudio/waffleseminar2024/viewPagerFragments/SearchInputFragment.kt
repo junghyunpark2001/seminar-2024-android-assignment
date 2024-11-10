@@ -109,8 +109,12 @@ class SearchInputFragment: Fragment() {
 
     private fun showResult(data: List<Movie>) {
         val action = SearchInputFragmentDirections.actionToSearchResultFragment(data.toTypedArray())
-        navController.navigate(action)
+        // 현재 위치가 SearchResultFragment가 아닐 때만 네비게이션 수행
+        if (navController.currentDestination?.id != R.id.SearchResultFragment) {
+            navController.navigate(action)
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
