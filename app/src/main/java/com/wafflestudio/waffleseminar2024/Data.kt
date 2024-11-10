@@ -22,7 +22,9 @@ data class Movie(
     val runtime: Int?,
     val status: String?,
     val vote_average: Double,
-    val genres: List<Genre>?
+    val genres: List<Genre>?,
+    var isFavorite: Boolean = false // 찜 상태를 나타내는 속성
+
 ) : Parcelable
 
 data class Company(

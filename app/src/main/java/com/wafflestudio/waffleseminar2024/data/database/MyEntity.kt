@@ -10,6 +10,11 @@ import com.wafflestudio.waffleseminar2024.Country
 import com.wafflestudio.waffleseminar2024.Genre
 import com.wafflestudio.waffleseminar2024.Language
 
+@Entity(tableName = "favorite_movie_ids")
+data class FavoriteMovieId(
+    @PrimaryKey val id: Int
+)
+
 @Entity(tableName = "example_table2")
 @TypeConverters(MyConverters::class)
 data class MyEntity(

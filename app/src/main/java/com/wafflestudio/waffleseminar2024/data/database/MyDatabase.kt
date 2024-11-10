@@ -9,26 +9,23 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [MyEntity::class], version = 1)
-@TypeConverters(MyConverters::class)
+@Database(entities = [FavoriteMovieId::class], version = 2)
 abstract class MyDatabase : RoomDatabase() {
-    abstract fun myDao(): MyDao
+    abstract fun myDao(): MovieDao
 
     companion object {
         @Volatile
-        private var INSTANCE: MyDatabase ?= null
+        private var INSTANCE: MyDatabase? = null
 
         fun getDatabase(context: Context): MyDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MyDatabase::class.java,
-                    "example_database"
-                )
-                    .createFromAsset("database/prepopulated_db.db") // 이 부분을 추가합니다.
+                    "my_database"
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
-
                 instance
             }
         }

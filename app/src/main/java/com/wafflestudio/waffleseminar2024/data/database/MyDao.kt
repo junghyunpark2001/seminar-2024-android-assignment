@@ -1,25 +1,20 @@
 package com.wafflestudio.waffleseminar2024.data.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.wafflestudio.waffleseminar2024.Movie
 
 @Dao
-interface MyDao {
+interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMyEntity(entity: MyEntity)
+    suspend fun insertFavoriteMovieId(favoriteMovieId: FavoriteMovieId)
 
-    @Query("SELECT * FROM example_table2")
-    fun getAllMyEntities(): List<MyEntity>
+    @Query("DELETE FROM favorite_movie_ids WHERE id = :movieId")
+    suspend fun deleteFavoriteMovieById(movieId: Int)
 
-    @Query("SELECT * FROM example_table2 WHERE id = :id")
-    fun getMyEntityById(id:Int): MyEntity
-
-    @Query("SELECT * FROM example_table2 WHERE title LIKE '%' || :titleWord || '%'")
-    fun getMoviesByTitle(titleWord: String): List<MyEntity>
-
-    @Query("SELECT * FROM example_table2 WHERE genres LIKE '%' || :genreId || '%'")
-    fun getMoviesByGenre(genreId: Int): List<MyEntity>
+    @Query("SELECT id FROM favorite_movie_ids")
+    suspend fun getAllFavoriteMovieIds(): List<Int>
 }

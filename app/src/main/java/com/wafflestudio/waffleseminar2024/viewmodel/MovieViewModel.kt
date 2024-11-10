@@ -18,6 +18,10 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     private val _searchResults = MutableLiveData<List<Movie>>()
     val searchResults: LiveData<List<Movie>> get() = _searchResults
 
+    private val _favoriteMovieTitles = MutableLiveData<List<String>>()
+    val favoriteMovieTitles: LiveData<List<String>> get() = _favoriteMovieTitles
+
+
     fun fetchMovieDetails(id: Int) {
         viewModelScope.launch {
             // 네트워크 작업은 IO 스레드에서 수행
@@ -47,4 +51,46 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
             _searchResults.value = movies ?: emptyList()  // 검색 결과 업데이트
         }
     }
+
+    fun isFavorite(movieId: Int): LiveData<Boolean> {
+        val isFavoriteLiveData = MutableLiveData<Boolean>()
+        viewModelScope.launch {
+            val favoriteIds = repository.getAllFavoriteMovieIds()
+            isFavoriteLiveData.postValue(favoriteIds.contains(movieId))
+        }
+        return isFavoriteLiveData
+    }
+
+    fun addMovieToFavorites(movieId: Int) {
+        viewModelScope.launch {
+            repository.addFavoriteMovieById(movieId)
+        }
+    }
+
+    fun removeMovieFromFavorites(movieId: Int) {
+        viewModelScope.launch {
+            repository.removeFavoriteMovieById(movieId)
+        }
+    }
+
+    // Room DB에서 찜한 영화 ID 목록을 가져와 제목을 가져오는 메서드
+    fun getFavoriteMovieIds() {
+        viewModelScope.launch {
+            updateFavoriteMovieTitles()
+        }
+    }
+    // 토글 시 즉시 제목을 업데이트하는 메서드
+    private suspend fun updateFavoriteMovieTitles() {
+        val movieIds = repository.getAllFavoriteMovieIds()
+        val movieTitles = mutableListOf<String>()
+        for (id in movieIds) {
+            val movieDetails = withContext(Dispatchers.IO) {
+                repository.getMovieById(id)
+            }
+            movieDetails?.let { movieTitles.add(it.title) }
+        }
+        _favoriteMovieTitles.value = movieTitles
+    }
+
+
 }

@@ -1,10 +1,16 @@
 package com.wafflestudio.waffleseminar2024.data.database
 
+import androidx.lifecycle.LiveData
 import com.wafflestudio.waffleseminar2024.API.TMDBService
 import com.wafflestudio.waffleseminar2024.Movie
 
 
-class MovieRepository(private val tmdbService: TMDBService) {
+class MovieRepository(
+    private val tmdbService: TMDBService,
+    private val myDao: MovieDao
+
+) {
+
 
     // 영화 ID로 영화 세부 정보를 가져오는 메서드
     suspend fun getMovieById(id: Int): Movie? {
@@ -49,6 +55,19 @@ class MovieRepository(private val tmdbService: TMDBService) {
             e.printStackTrace()
             null // 예외가 발생한 경우 null 반환
         }
+    }
+
+    suspend fun addFavoriteMovieById(movieId: Int) {
+        val favoriteMovieId = FavoriteMovieId(id = movieId)
+        myDao.insertFavoriteMovieId(favoriteMovieId)
+    }
+
+    suspend fun removeFavoriteMovieById(movieId: Int) {
+        myDao.deleteFavoriteMovieById(movieId)
+    }
+
+    suspend fun getAllFavoriteMovieIds(): List<Int> {
+        return myDao.getAllFavoriteMovieIds()
     }
 }
 
