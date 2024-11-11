@@ -1,5 +1,6 @@
 package com.wafflestudio.waffleseminar2024.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -64,12 +65,14 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     fun addMovieToFavorites(movieId: Int) {
         viewModelScope.launch {
             repository.addFavoriteMovieById(movieId)
+            updateFavoriteMovieTitles()
         }
     }
 
     fun removeMovieFromFavorites(movieId: Int) {
         viewModelScope.launch {
             repository.removeFavoriteMovieById(movieId)
+            updateFavoriteMovieTitles()
         }
     }
 
@@ -81,6 +84,7 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     }
     // 토글 시 즉시 제목을 업데이트하는 메서드
     private suspend fun updateFavoriteMovieTitles() {
+        Log.d("debug","observe movie update")
         val movieIds = repository.getAllFavoriteMovieIds()
         val movieTitles = mutableListOf<String>()
         for (id in movieIds) {
@@ -89,8 +93,7 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
             }
             movieDetails?.let { movieTitles.add(it.title) }
         }
-        _favoriteMovieTitles.value = movieTitles
+        _favoriteMovieTitles.postValue(movieTitles) // 비동기 작업에서는 postValue 사용
+        Log.d("debug", "Updated favoriteMovieTitles: $movieTitles")
     }
-
-
 }

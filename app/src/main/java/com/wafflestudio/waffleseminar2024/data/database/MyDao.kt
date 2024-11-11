@@ -1,5 +1,6 @@
 package com.wafflestudio.waffleseminar2024.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,4 +18,9 @@ interface MovieDao {
 
     @Query("SELECT id FROM favorite_movie_ids")
     suspend fun getAllFavoriteMovieIds(): List<Int>
+
+    // LiveData로 즐겨찾기 영화 ID 목록 반환
+    @Query("SELECT id FROM favorite_movie_ids")
+    fun getAllFavoriteMovieIdsLiveData(): LiveData<List<Int>>
+
 }

@@ -70,4 +70,3 @@ class MovieRepository(
         return myDao.getAllFavoriteMovieIds()
     }
 }
-

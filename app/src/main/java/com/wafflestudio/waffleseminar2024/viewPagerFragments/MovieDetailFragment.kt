@@ -31,11 +31,13 @@ class MovieDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var genreChipAdapter: GenreChipAdapter
+    private var isFavorite = false // 찜 상태를 변수로 관리
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,7 +63,8 @@ class MovieDetailFragment : Fragment() {
                 binding.revenueText.text = DecimalFormat("$#,###").format(it.revenue)
 
                 // 찜 상태를 업데이트
-                viewModel.isFavorite(movieId).observe(viewLifecycleOwner) { isFavorite ->
+                viewModel.isFavorite(movieId).observe(viewLifecycleOwner) { favorite ->
+                    isFavorite = favorite
                     updateFavoriteIcon(isFavorite)
                 }
             }
@@ -74,16 +77,17 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun toggleFavorite() {
-        viewModel.isFavorite(movieId).observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) {
-                viewModel.removeMovieFromFavorites(movieId)
-                updateFavoriteIcon(false)
-            } else {
-                viewModel.addMovieToFavorites(movieId)
-                updateFavoriteIcon(true)
-            }
+        if (isFavorite) {
+            viewModel.removeMovieFromFavorites(movieId)
+            updateFavoriteIcon(false)
+        } else {
+            viewModel.addMovieToFavorites(movieId)
+            updateFavoriteIcon(true)
         }
+        // 찜 상태를 토글
+        isFavorite = !isFavorite
     }
+
 
 
     private fun updateFavoriteIcon(isFavorite: Boolean) {

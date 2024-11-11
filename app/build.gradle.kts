@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     kotlin("plugin.serialization") version "2.0.21"
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+
 }
 
 android {
@@ -75,4 +76,6 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 }
