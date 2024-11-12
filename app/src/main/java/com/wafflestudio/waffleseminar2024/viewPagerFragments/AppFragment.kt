@@ -26,12 +26,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.wafflestudio.waffleseminar2024.HomeActivity
 import com.wafflestudio.waffleseminar2024.Movie
-import com.wafflestudio.waffleseminar2024.adapter.searchResultRecyclerViewAdapter
+import com.wafflestudio.waffleseminar2024.adapter.favoriteRecyclerViewAdapter
 import com.wafflestudio.waffleseminar2024.databinding.PageAppBinding
 
 class AppFragment : Fragment() {
     private var _binding: PageAppBinding? = null
     private val binding get() = _binding!!
+    lateinit var favoriteRecyclerView: RecyclerView
 
     private val viewModel: MovieViewModel by activityViewModels { MovieViewModelFactory(requireContext()) }
     private lateinit var navController: NavController
@@ -53,16 +54,20 @@ class AppFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setSearchResultRecyclerView()
+
         // Room DB에서 찜한 영화 ID 목록을 가져옵니다.
         viewModel.getFavoriteMovieIds()
 
-        // 영화 제목 가져오기
-        viewModel.favoriteMovieTitles.observe(viewLifecycleOwner) { movieTitles ->
-            Log.d("update?", "yes")
-            Log.d("movieTitles", movieTitles.toString())
-            val titlesText = movieTitles.joinToString("\n")
-            binding.titlesTextView.text = titlesText // 바인딩 객체를 통해 TextView에 접근
-        }
+
+
+//        // 영화 제목 가져오기
+//        viewModel.favoriteMovieTitles.observe(viewLifecycleOwner) { movieTitles ->
+//            Log.d("update?", "yes")
+//            Log.d("movieTitles", movieTitles.toString())
+//            val titlesText = movieTitles.joinToString("\n")
+//            binding.titlesTextView.text = titlesText // 바인딩 객체를 통해 TextView에 접근
+//        }
 
         // 버튼 클릭 이벤트 설정
         binding.navigateButton.setOnClickListener {
@@ -72,9 +77,21 @@ class AppFragment : Fragment() {
         // 추가적인 ViewModel 관찰자 설정
         viewModel.favoriteMovies.observe(viewLifecycleOwner) { movies ->
             // 필요에 따라 movies 처리
+            Log.d("movies", movies.toString())
+
+            showResult(movies)
         }
     }
+    private fun setSearchResultRecyclerView(){
+        favoriteRecyclerView = binding.favoriteRecyclerView
+    }
 
+    private fun showResult(data: List<Movie>) {
+        Log.d("show", "into function")
+        favoriteRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        favoriteRecyclerView.adapter = favoriteRecyclerViewAdapter(data)
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // 바인딩 객체 해제
