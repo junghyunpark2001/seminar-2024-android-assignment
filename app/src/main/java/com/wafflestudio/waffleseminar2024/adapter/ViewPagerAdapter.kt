@@ -19,7 +19,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity, private val slackWork
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> GameFragment()
-            1 -> FavoriteMovieFragment()
+            1 -> AppFragment()
             2 -> SearchFragment()
             3 -> {
                 val fragment = UserInformationFragment()

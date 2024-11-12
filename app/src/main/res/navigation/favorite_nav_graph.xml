@@ -11,14 +11,15 @@
         tools:layout="@layout/page_game">
         <action
             android:id="@+id/action_gameFragment_to_newFragment"
-            app:destination="@id/FavoriteFragment" />
+            app:destination="@id/SearchOverviewFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/FavoriteFragment"
-        android:name="com.wafflestudio.waffleseminar2024.viewPagerFragments.FavoriteFragment"
-        android:label="NewFragment"
-        tools:layout="@layout/favorite_fragment" />
+        android:id="@+id/SearchOverviewFragment"
+        android:name="com.wafflestudio.waffleseminar2024.viewPagerFragments.SearchOverviewFragment"
+        android:label="Search Overview">
+
+    </fragment>
 
 
 </navigation>

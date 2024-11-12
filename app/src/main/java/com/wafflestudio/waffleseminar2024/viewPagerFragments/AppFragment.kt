@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.wafflestudio.waffleseminar2024.R
 import com.wafflestudio.waffleseminar2024.databinding.FragmentSearchresultBinding
@@ -26,121 +27,56 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.wafflestudio.waffleseminar2024.HomeActivity
 import com.wafflestudio.waffleseminar2024.Movie
 import com.wafflestudio.waffleseminar2024.adapter.searchResultRecyclerViewAdapter
-
-
+import com.wafflestudio.waffleseminar2024.databinding.PageAppBinding
 
 class AppFragment : Fragment() {
+    private var _binding: PageAppBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel: MovieViewModel by activityViewModels { MovieViewModelFactory(requireContext()) }
-    private lateinit var titlesTextView: TextView
     private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.page_app, container, false)
+    ): View {
+        // View Binding을 사용하여 바인딩 객체 초기화
+        _binding = PageAppBinding.inflate(inflater, container, false)
 
-        titlesTextView = view.findViewById(R.id.PageApp) // TextView ID 설정
-        return view
+        // NavController 초기화: NavHostFragment를 childFragmentManager에서 가져옵니다.
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         // Room DB에서 찜한 영화 ID 목록을 가져옵니다.
         viewModel.getFavoriteMovieIds()
 
         // 영화 제목 가져오기
         viewModel.favoriteMovieTitles.observe(viewLifecycleOwner) { movieTitles ->
-            // 영화 제목을 줄바꿈하여 TextView에 설정합니다.
-            Log.d("update?","yes")
+            Log.d("update?", "yes")
             Log.d("movieTitles", movieTitles.toString())
             val titlesText = movieTitles.joinToString("\n")
-            titlesTextView.text = titlesText
+            binding.titlesTextView.text = titlesText // 바인딩 객체를 통해 TextView에 접근
         }
 
-        navController = findNavController()
-
-        // 새로운 버튼을 참조합니다.
-        val navigateButton: Button = view.findViewById(R.id.navigateButton)
-
-
-        // 버튼 클릭 시 FavoriteFragment로 이동합니다.
-        navigateButton.setOnClickListener {
+        // 버튼 클릭 이벤트 설정
+        binding.navigateButton.setOnClickListener {
             navController.navigate(R.id.action_gameFragment_to_newFragment)
         }
 
-        viewModel.favoriteMovies.observe(viewLifecycleOwner){movies ->
-
+        // 추가적인 ViewModel 관찰자 설정
+        viewModel.favoriteMovies.observe(viewLifecycleOwner) { movies ->
+            // 필요에 따라 movies 처리
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null // 바인딩 객체 해제
+    }
 }
-
-
-
-
-
-//
-//class AppFragment : Fragment() {
-//    private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(requireContext()) }
-//    private lateinit var navController: NavController
-//    private var _binding: FragmentSearchresultBinding? = null
-//    private val binding get() = _binding!!
-//
-//    private lateinit var searchResultRecyclerView: RecyclerView
-//
-//    private lateinit var titlesTextView: TextView
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        _binding = FragmentSearchresultBinding.inflate(inflater, container, false)
-//        return binding.root
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        navController = findNavController()
-//
-//        // RecyclerView 설정
-//        setSearchResultRecyclerView()
-//
-//        // ViewModel을 사용해 찜한 영화 목록을 가져옵니다.
-//        viewModel.getFavoriteMovieIds()
-//
-//        // 영화 제목 가져오기
-//        viewModel.favoriteMovieTitles.observe(viewLifecycleOwner) { movieTitles ->
-//            // 영화 제목을 줄바꿈하여 TextView에 설정합니다.
-//            Log.d("update?","yes")
-//            Log.d("movieTitles", movieTitles.toString())
-//            val titlesText = movieTitles.joinToString("\n")
-//            titlesTextView.text = titlesText
-//        }
-//        // 찜한 영화 목록을 관찰하여 RecyclerView에 데이터를 표시합니다.
-//        viewModel.favoriteMovies.observe(viewLifecycleOwner) { movies ->
-//            showResult(movies)
-//        }
-//    }
-//
-//    private fun setSearchResultRecyclerView() {
-//        searchResultRecyclerView = binding.searchResultRecyclerView
-//        searchResultRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3) // 3줄로 표시
-//    }
-//
-//    private fun showResult(data: List<Movie>) {
-//        searchResultRecyclerView.adapter = searchResultRecyclerViewAdapter(data) { movie ->
-//            // 영화 상세 페이지로 이동
-//            val action = AppFragmentDirections.actionToMovieDetailFragment(movie.id)
-//            navController.navigate(action)
-//        }
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
-//}

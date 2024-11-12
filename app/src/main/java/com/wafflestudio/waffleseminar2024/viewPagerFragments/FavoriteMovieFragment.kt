@@ -8,17 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.wafflestudio.waffleseminar2024.R
+import com.wafflestudio.waffleseminar2024.databinding.FavoriteSearchBinding
 import com.wafflestudio.waffleseminar2024.databinding.FragmentSearchBinding
 
 class FavoriteMovieFragment : Fragment() {
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FavoriteSearchBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FavoriteSearchBinding.inflate(inflater, container, false)
 
         // NavHostFragment 초기화        // NavHostFragment 초기화
         //        val navHostFragment = childFragmentManager.findFragmentById(R.id.favorite_nav_host_fragment) as NavHostFragment
