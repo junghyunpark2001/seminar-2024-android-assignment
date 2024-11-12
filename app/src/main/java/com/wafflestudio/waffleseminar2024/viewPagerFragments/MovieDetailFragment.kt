@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -22,7 +23,7 @@ import java.text.NumberFormat
 import java.util.Locale
 class MovieDetailFragment : Fragment() {
     private lateinit var navController: NavController
-    private val viewModel: MovieViewModel by viewModels { MovieViewModelFactory(requireContext()) }
+    private val viewModel: MovieViewModel by activityViewModels { MovieViewModelFactory(requireContext()) }
     private val movieId: Int by lazy {
         arguments?.getInt("movieId") ?: 0
     }

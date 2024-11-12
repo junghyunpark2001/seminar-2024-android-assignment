@@ -25,4 +25,14 @@
         app:layout_constraintBottom_toTopOf="@id/tabLayout"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/favorite_nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:navGraph="@navigation/favorite_nav_graph"
+        app:defaultNavHost="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

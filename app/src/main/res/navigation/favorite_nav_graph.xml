@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/AppFragment">
+
+    <fragment
+        android:id="@+id/AppFragment"
+        android:name="com.wafflestudio.waffleseminar2024.viewPagerFragments.GameFragment"
+        android:label="GameFragment"
+        tools:layout="@layout/page_game">
+        <action
+            android:id="@+id/action_gameFragment_to_newFragment"
+            app:destination="@id/FavoriteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FavoriteFragment"
+        android:name="com.wafflestudio.waffleseminar2024.viewPagerFragments.FavoriteFragment"
+        android:label="NewFragment"
+        tools:layout="@layout/favorite_fragment" />
+
+
+</navigation>
