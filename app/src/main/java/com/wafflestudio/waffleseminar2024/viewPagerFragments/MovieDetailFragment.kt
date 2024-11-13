@@ -75,6 +75,9 @@ class MovieDetailFragment : Fragment() {
         binding.favoriteIcon.setOnClickListener {
             toggleFavorite()
         }
+        binding.backArrowIcon.setOnClickListener {
+            navController.navigateUp() // 이전 페이지로 이동
+        }
     }
 
     private fun toggleFavorite() {

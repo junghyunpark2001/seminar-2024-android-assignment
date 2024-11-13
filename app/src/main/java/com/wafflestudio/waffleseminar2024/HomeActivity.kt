@@ -38,8 +38,8 @@ class HomeActivity: AppCompatActivity() {
                     tab.setIcon(R.drawable.game)
                 }
                 1->{
-                    tab.text = "앱"
-                    tab.setIcon(R.drawable.app)
+                    tab.text = "찜"
+                    tab.setIcon(R.drawable.ic_heart_outline)
                 }
                 2->{
                     tab.text = "검색"

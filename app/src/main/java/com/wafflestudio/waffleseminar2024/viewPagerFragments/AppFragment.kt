@@ -44,9 +44,6 @@ class AppFragment : Fragment() {
         // View Binding을 사용하여 바인딩 객체 초기화
         _binding = PageAppBinding.inflate(inflater, container, false)
 
-        // NavController 초기화: NavHostFragment를 childFragmentManager에서 가져옵니다.
-//         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//         navController = navHostFragment.navController
 
 
         return binding.root
@@ -62,19 +59,6 @@ class AppFragment : Fragment() {
         viewModel.getFavoriteMovieIds()
 
 
-
-//        // 영화 제목 가져오기
-//        viewModel.favoriteMovieTitles.observe(viewLifecycleOwner) { movieTitles ->
-//            Log.d("update?", "yes")
-//            Log.d("movieTitles", movieTitles.toString())
-//            val titlesText = movieTitles.joinToString("\n")
-//            binding.titlesTextView.text = titlesText // 바인딩 객체를 통해 TextView에 접근
-//        }
-
-        // 버튼 클릭 이벤트 설정
-//        binding.navigateButton.setOnClickListener {
-//            navController.navigate(R.id.action_gameFragment_to_newFragment)
-//        }
 
         // 추가적인 ViewModel 관찰자 설정
         viewModel.favoriteMovies.observe(viewLifecycleOwner) { movies ->
