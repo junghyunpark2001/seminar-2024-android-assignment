@@ -12,6 +12,7 @@ import com.wafflestudio.waffleseminar2024.R
 
 class favoriteRecyclerViewAdapter(
     private val movieList: List<Movie>,
+    private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<favoriteRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,10 +29,11 @@ class favoriteRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = movieList[position]
-        Log.d("bind","here")
 
         val imageUrl = "https://image.tmdb.org/t/p/original" + currentItem.poster_path
         holder.imageView.load(imageUrl)
+        holder.itemView.setOnClickListener {onMovieClick(currentItem)}
+
 
     }
 

@@ -6,13 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.wafflestudio.waffleseminar2024.R
+import com.wafflestudio.waffleseminar2024.databinding.FavoriteSearchBinding
+import com.wafflestudio.waffleseminar2024.databinding.FragmentSearchBinding
 
 class FavoriteFragment : Fragment() {
+    private var _binding: FavoriteSearchBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.favorite_fragment, container, false)
+    ): View {
+        _binding = FavoriteSearchBinding.inflate(inflater, container, false)
+
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.favorite_nav_host_fragment) as NavHostFragment
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

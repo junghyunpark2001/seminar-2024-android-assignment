@@ -45,8 +45,9 @@ class AppFragment : Fragment() {
         _binding = PageAppBinding.inflate(inflater, container, false)
 
         // NavController 초기화: NavHostFragment를 childFragmentManager에서 가져옵니다.
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+//         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//         navController = navHostFragment.navController
+
 
         return binding.root
     }
@@ -55,6 +56,7 @@ class AppFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setSearchResultRecyclerView()
+        navController = findNavController()
 
         // Room DB에서 찜한 영화 ID 목록을 가져옵니다.
         viewModel.getFavoriteMovieIds()
@@ -70,9 +72,9 @@ class AppFragment : Fragment() {
 //        }
 
         // 버튼 클릭 이벤트 설정
-        binding.navigateButton.setOnClickListener {
-            navController.navigate(R.id.action_gameFragment_to_newFragment)
-        }
+//        binding.navigateButton.setOnClickListener {
+//            navController.navigate(R.id.action_gameFragment_to_newFragment)
+//        }
 
         // 추가적인 ViewModel 관찰자 설정
         viewModel.favoriteMovies.observe(viewLifecycleOwner) { movies ->
@@ -89,7 +91,10 @@ class AppFragment : Fragment() {
     private fun showResult(data: List<Movie>) {
         Log.d("show", "into function")
         favoriteRecyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        favoriteRecyclerView.adapter = favoriteRecyclerViewAdapter(data)
+        favoriteRecyclerView.adapter = favoriteRecyclerViewAdapter(data) { movie ->
+            val action = SearchResultFragmentDirections.actionToMovieDetailFragment(movie.id)
+            navController.navigate(action)
+        }
 
     }
     override fun onDestroyView() {
