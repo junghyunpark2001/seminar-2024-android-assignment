@@ -6,21 +6,30 @@ import androidx.lifecycle.ViewModelProvider
 import com.wafflestudio.waffleseminar2024.API.RetrofitInstance
 import com.wafflestudio.waffleseminar2024.data.database.MovieRepository
 import com.wafflestudio.waffleseminar2024.data.database.MyDatabase
-import com.wafflestudio.waffleseminar2024.data.database.MyDatabase.Companion.getDatabase
-
+import com.wafflestudio.waffleseminar2024.interfaces.ITMDBService
+import com.wafflestudio.waffleseminar2024.interfaces.ITMDBServiceAdapter
+import com. wafflestudio. waffleseminar2024.API. TMDBService
+import com.wafflestudio.waffleseminar2024.interfaces.IMovieDao
+import com.wafflestudio.waffleseminar2024.interfaces.MovieDaoImpl
 
 class MovieViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MovieViewModel::class.java)) {
-            // RetrofitInstance를 통해 TMDBService 가져오기
-            val tmdbService = RetrofitInstance.apiService
+            // TMDBService 가져오기
+            val tmdbService: TMDBService = RetrofitInstance.apiService
 
-            // Room Database 인스턴스를 통해 MyDao 가져오기
+            // ITMDBServiceAdapter를 사용해 TMDBService를 ITMDBService로 변환
+            val tmdbServiceAdapter: ITMDBService = ITMDBServiceAdapter(tmdbService)
+
+            // Room Database 인스턴스를 통해 MovieDao 가져오기
             val database = MyDatabase.getDatabase(context)
-            val myDao = database.myDao()
+            val movieDao = database.myDao()
 
-            // 두 가지 데이터 소스를 포함하는 Repository 생성
-            val repository = MovieRepository(tmdbService, myDao)
+            val myDao: IMovieDao = MovieDaoImpl(movieDao)
+
+
+            // MovieRepository 생성 시 필요한 의존성 전달
+            val repository = MovieRepository(tmdbServiceAdapter, myDao)
             return MovieViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
