@@ -1,10 +1,8 @@
 package com.wafflestudio.waffleseminar2024.data.database
 
-import androidx.lifecycle.LiveData
-import com.wafflestudio.waffleseminar2024.API.TMDBService
 import com.wafflestudio.waffleseminar2024.Movie
-import com.wafflestudio.waffleseminar2024.interfaces.IMovieDao
-import com.wafflestudio.waffleseminar2024.interfaces.ITMDBService
+import com.wafflestudio.waffleseminar2024.dependencies.IMovieDao
+import com.wafflestudio.waffleseminar2024.dependencies.ITMDBService
 
 
 class MovieRepository(

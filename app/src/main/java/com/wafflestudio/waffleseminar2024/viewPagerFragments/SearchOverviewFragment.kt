@@ -24,11 +24,12 @@ import com.wafflestudio.waffleseminar2024.data.database.MovieRepository
 import com.wafflestudio.waffleseminar2024.databinding.FragmentSearchoverviewBinding
 import com.wafflestudio.waffleseminar2024.viewmodel.MovieViewModel
 import com.wafflestudio.waffleseminar2024.viewmodel.MovieViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
 interface OnGenreClickListener {
     fun onGenreClick(genreId: Int)
 }
-
+@AndroidEntryPoint
 class SearchOverviewFragment : Fragment(), OnGenreClickListener {
     private lateinit var navController: NavController
 
@@ -37,7 +38,7 @@ class SearchOverviewFragment : Fragment(), OnGenreClickListener {
 
     lateinit var genreRecyclerView: RecyclerView
 
-    private val movieViewModel: MovieViewModel by viewModels { MovieViewModelFactory(requireContext()) }
+    private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

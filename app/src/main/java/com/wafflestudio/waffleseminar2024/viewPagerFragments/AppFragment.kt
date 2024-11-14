@@ -29,6 +29,7 @@ import com.wafflestudio.waffleseminar2024.Movie
 import com.wafflestudio.waffleseminar2024.adapter.favoriteRecyclerViewAdapter
 import com.wafflestudio.waffleseminar2024.databinding.PageAppBinding
 
+
 class AppFragment : Fragment() {
     private var _binding: PageAppBinding? = null
     private val binding get() = _binding!!

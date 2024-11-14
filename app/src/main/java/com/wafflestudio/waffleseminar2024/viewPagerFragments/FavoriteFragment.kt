@@ -21,7 +21,6 @@ class FavoriteFragment : Fragment() {
     ): View {
         _binding = FavoriteSearchBinding.inflate(inflater, container, false)
 
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.favorite_nav_host_fragment) as NavHostFragment
 
         return binding.root
     }

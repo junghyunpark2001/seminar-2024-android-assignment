@@ -1,4 +1,4 @@
-package com.wafflestudio.waffleseminar2024.interfaces
+package com.wafflestudio.waffleseminar2024.dependencies
 
 import androidx.lifecycle.LiveData
 import com.wafflestudio.waffleseminar2024.data.database.FavoriteMovieId

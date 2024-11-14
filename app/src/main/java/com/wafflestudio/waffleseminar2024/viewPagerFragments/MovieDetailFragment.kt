@@ -18,12 +18,15 @@ import com.wafflestudio.waffleseminar2024.adapter.GenreChipAdapter
 import com.wafflestudio.waffleseminar2024.databinding.FragmentMovieDetailBinding
 import com.wafflestudio.waffleseminar2024.viewmodel.MovieViewModel
 import com.wafflestudio.waffleseminar2024.viewmodel.MovieViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
+
+@AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
     private lateinit var navController: NavController
-    private val viewModel: MovieViewModel by activityViewModels { MovieViewModelFactory(requireContext()) }
+    private val viewModel: MovieViewModel by viewModels()
     private val movieId: Int by lazy {
         arguments?.getInt("movieId") ?: 0
     }

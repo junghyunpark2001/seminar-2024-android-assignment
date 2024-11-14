@@ -1,4 +1,4 @@
-package com.wafflestudio.waffleseminar2024.interfaces
+package com.wafflestudio.waffleseminar2024.dependencies
 
 import com.wafflestudio.waffleseminar2024.Movie
 import com.wafflestudio.waffleseminar2024.MovieSearchResponse

@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.wafflestudio.waffleseminar2024.API.RetrofitInstance
 import com.wafflestudio.waffleseminar2024.data.database.MovieRepository
 import com.wafflestudio.waffleseminar2024.data.database.MyDatabase
-import com.wafflestudio.waffleseminar2024.interfaces.ITMDBService
-import com.wafflestudio.waffleseminar2024.interfaces.ITMDBServiceAdapter
+import com.wafflestudio.waffleseminar2024.dependencies.ITMDBService
+import com.wafflestudio.waffleseminar2024.dependencies.ITMDBServiceAdapter
 import com. wafflestudio. waffleseminar2024.API. TMDBService
-import com.wafflestudio.waffleseminar2024.interfaces.IMovieDao
-import com.wafflestudio.waffleseminar2024.interfaces.MovieDaoImpl
+import com.wafflestudio.waffleseminar2024.dependencies.IMovieDao
+import com.wafflestudio.waffleseminar2024.dependencies.MovieDaoImpl
 
 class MovieViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

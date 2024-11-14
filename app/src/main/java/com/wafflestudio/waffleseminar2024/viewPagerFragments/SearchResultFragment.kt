@@ -18,8 +18,9 @@ import com.wafflestudio.waffleseminar2024.Movie
 import com.wafflestudio.waffleseminar2024.R
 import com.wafflestudio.waffleseminar2024.databinding.FragmentSearchresultBinding
 import com.wafflestudio.waffleseminar2024.adapter.searchResultRecyclerViewAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SearchResultFragment : Fragment() {
     private lateinit var navController: NavController
     private var _binding: FragmentSearchresultBinding? = null

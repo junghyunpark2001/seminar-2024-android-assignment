@@ -1,4 +1,4 @@
-package com.wafflestudio.waffleseminar2024.interfaces
+package com.wafflestudio.waffleseminar2024.dependencies
 
 import com.wafflestudio.waffleseminar2024.API.TMDBService
 import com.wafflestudio.waffleseminar2024.Movie
